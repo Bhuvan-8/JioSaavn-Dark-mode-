@@ -1,0 +1,57 @@
+// ==UserScript==
+// @name         JioSaavn Dark Mode
+// @namespace    http://tampermonkey.net/
+// @version      1.0
+// @description  Force dark mode on JioSaavn
+// @match        https://www.jiosaavn.com/*
+// @grant        none
+// ==/UserScript==
+
+(function() {
+    'use strict';
+
+    const css = `
+        body, html, div, section, header, footer, main, nav, article, aside {
+            background-color: #121212 !important;
+            color: #e0e0e0 !important;
+        }
+
+        a, span, p, h1, h2, h3, h4, h5, h6, li, button {
+            color: #ddd !important;
+        }
+
+        .c-player, .c-btn, .u-color-js-gray, .u-color-js-white, 
+        .c-song-title, .c-artist-name, .c-playlist-card, .c-card, 
+        .c-songlist-item, .c-album-card, .c-navbar, .c-side-bar, .c-footer {
+            background-color: #1e1e1e !important;
+            color: #fff !important;
+            border-color: #2c2c2c !important;
+        }
+
+        button, .c-btn, .c-icon-button {
+            background-color: #2c2c2c !important;
+            border: none !important;
+            color: #fff !important;
+        }
+
+        img, video {
+            filter: brightness(0.9) !important;
+        }
+
+        * {
+            background-color: inherit !important;
+            color: inherit !important;
+        }
+    `;
+
+    const style = document.createElement('style');
+    style.textContent = css;
+    document.head.appendChild(style);
+
+    // Observe DOM changes to apply styles on dynamically loaded content
+    const observer = new MutationObserver(() => {
+        document.head.appendChild(style);
+    });
+
+    observer.observe(document.body, { childList: true, subtree: true });
+})();
